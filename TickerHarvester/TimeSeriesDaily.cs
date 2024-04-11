@@ -38,7 +38,7 @@ namespace TickerHarvester
         public string Volume { get; set; }
     }
 
-    public class RootObject
+    public class TimeSeriesDaily
     {
         [JsonProperty("Meta Data")]
         public MetaData MetaData { get; set; }
