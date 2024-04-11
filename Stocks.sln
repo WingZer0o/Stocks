@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TickerHarvester", "TickerHarvester\TickerHarvester.csproj", "{08771115-0045-48F3-806C-14E5C7B38FC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TickerHarvester", "TickerHarvester\TickerHarvester.csproj", "{08771115-0045-48F3-806C-14E5C7B38FC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{8E6C3EC2-C12E-467D-BAC7-D95A0FFF3CAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{9BD0B1B5-4620-4C8A-9F06-7F45144BE45C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{08771115-0045-48F3-806C-14E5C7B38FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08771115-0045-48F3-806C-14E5C7B38FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08771115-0045-48F3-806C-14E5C7B38FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E6C3EC2-C12E-467D-BAC7-D95A0FFF3CAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E6C3EC2-C12E-467D-BAC7-D95A0FFF3CAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E6C3EC2-C12E-467D-BAC7-D95A0FFF3CAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E6C3EC2-C12E-467D-BAC7-D95A0FFF3CAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BD0B1B5-4620-4C8A-9F06-7F45144BE45C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BD0B1B5-4620-4C8A-9F06-7F45144BE45C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BD0B1B5-4620-4C8A-9F06-7F45144BE45C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BD0B1B5-4620-4C8A-9F06-7F45144BE45C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
