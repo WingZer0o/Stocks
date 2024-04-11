@@ -6,5 +6,10 @@
         {
             public static string AlphaVantage = Environment.GetEnvironmentVariable("AlphaVantageApiKey");
         }
+
+        public class ConnectionStrings
+        {
+            public const string StocksDatabase = "Data Source=MM-LAPTOP;Initial Catalog=Stocks;Integrated Security=True;Encrypt=False";
+        }
     }
 }
