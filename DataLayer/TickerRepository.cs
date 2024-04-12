@@ -11,7 +11,7 @@ namespace DataLayer
             using SqlCommand command = new SqlCommand("dbo.InsertTicker", connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Ticker", ticker);
-            connection.Open();
+            await connection.OpenAsync();
             await command.ExecuteNonQueryAsync();
         }
     }

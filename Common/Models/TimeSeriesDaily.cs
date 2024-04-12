@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TickerHarvester
+namespace Common.Models
 {
     public class MetaData
     {

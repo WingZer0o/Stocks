@@ -1,6 +1,7 @@
 ﻿using Common;
+using Common.Models;
+using DataLayer;
 using Newtonsoft.Json;
-using TickerHarvester;
 
 namespace AlphaVantageTickerHarvester
 {
@@ -15,6 +16,7 @@ namespace AlphaVantageTickerHarvester
             HttpResponseMessage response = client.GetAsync(queryUri).GetAwaiter().GetResult();
             string data = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             TimeSeriesDaily parsedData = JsonConvert.DeserializeObject<TimeSeriesDaily>(data);
+            Options.StoreMovingAverageTimeSeriesData(ticker, parsedData);
 
             List<string> days10 = parsedData.TimeSeries.Take(10).ToList().Select(x => x.Value.Close).ToList();
             double days10MovingAverage = MovingAverages.SimpleMovingAverage(days10);
@@ -27,6 +29,16 @@ namespace AlphaVantageTickerHarvester
             List<string> days200 = parsedData.TimeSeries.Take(200).ToList().Select(x => x.Value.Close).ToList();
             double days200MovingAverage = MovingAverages.SimpleMovingAverage(days200);
             Console.WriteLine(String.Format("The 200 Day SMA for {0}, is : {1}", ticker, days200MovingAverage));
+        }
+
+        private static async Task StoreMovingAverageTimeSeriesData(string ticker, TimeSeriesDaily parsedData)
+        {
+            List<Task> dbCalls = new();
+            foreach (KeyValuePair<string, TimeSeriesData> kvp in parsedData.TimeSeries)
+            {
+                dbCalls.Add(TimeSeriesDailyRepository.InsertTimeSeriesDaily(ticker, kvp.Key, kvp.Value));
+            }
+            await Task.WhenAll(dbCalls);
         }
     }
 }
