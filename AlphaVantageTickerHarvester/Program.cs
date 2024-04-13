@@ -10,6 +10,7 @@ TickerRepository.InsertTicker(userTickerInput);
 Console.WriteLine("Please enter an option: ");
 Console.WriteLine("1. 10, 50, 200 Day Simple Moving Averages (SMA)");
 Console.WriteLine("2. Populate Database with Time Series Data");
+Console.WriteLine("3. Populate Portfolio Tickers with Time Series Data");
 
 string userOption = Console.ReadLine();
 
@@ -20,6 +21,9 @@ switch (userOption)
         break;
     case "2":
         await Options.PopulateDataWithTimeSeriesData(userTickerInput);
+        break;
+    case "3":
+        await Options.PopulatePortfolioTickersWithTimeSeriesData();
         break;
     default:
         Console.WriteLine("You did not enter a valid option");

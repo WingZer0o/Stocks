@@ -34,7 +34,7 @@ namespace DataLayer
             await connection.OpenAsync();
             using SqlDataReader reader = await command.ExecuteReaderAsync();
             List<TimeSeriesDailyEntity> results = new();
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
                 results.Add(new TimeSeriesDailyEntity()
                 {

@@ -1,6 +1,7 @@
 ﻿using Common;
 using Common.Models;
 using DataLayer;
+using DataLayer.Models;
 using Newtonsoft.Json;
 
 namespace AlphaVantageTickerHarvester
@@ -12,7 +13,7 @@ namespace AlphaVantageTickerHarvester
             string QUERY_URL = String.Format("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol={0}&apikey={1}", ticker, Constants.ApiKeys.AlphaVantage);
             Uri queryUri = new Uri(QUERY_URL);
 
-            using HttpClient client = HttpClientSingleton.Instance;
+            HttpClient client = HttpClientSingleton.Instance;
             HttpResponseMessage response = client.GetAsync(queryUri).GetAwaiter().GetResult();
             string data = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             TimeSeriesDaily parsedData = JsonConvert.DeserializeObject<TimeSeriesDaily>(data);
@@ -35,14 +36,14 @@ namespace AlphaVantageTickerHarvester
             string QUERY_URL = String.Format("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol={0}&apikey={1}", ticker, Constants.ApiKeys.AlphaVantage);
             Uri queryUri = new Uri(QUERY_URL);
 
-            using HttpClient client = HttpClientSingleton.Instance;
-            HttpResponseMessage response = client.GetAsync(queryUri).GetAwaiter().GetResult();
-            string data = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            HttpClient client = HttpClientSingleton.Instance;
+            HttpResponseMessage response = await client.GetAsync(queryUri);
+            string data = await response.Content.ReadAsStringAsync();
             TimeSeriesDaily parsedData = JsonConvert.DeserializeObject<TimeSeriesDaily>(data);
-            await Options.StoreMovingAverageTimeSeriesData(ticker, parsedData);
+            await Options.StoreTimeSeriesData(ticker, parsedData);
         }
 
-        private static async Task StoreMovingAverageTimeSeriesData(string ticker, TimeSeriesDaily parsedData)
+        private static async Task StoreTimeSeriesData(string ticker, TimeSeriesDaily parsedData)
         {
             List<Task> dbCalls = new();
             foreach (KeyValuePair<string, TimeSeriesData> kvp in parsedData.TimeSeries)
@@ -50,6 +51,23 @@ namespace AlphaVantageTickerHarvester
                 dbCalls.Add(TimeSeriesDailyRepository.InsertTimeSeriesDaily(ticker, kvp.Key, kvp.Value));
             }
             await Task.WhenAll(dbCalls);
+        }
+
+        public static async Task PopulatePortfolioTickersWithTimeSeriesData()
+        {
+            List<TickerEntity> portfolioTickers = await TickerRepository.GetPortfolioTickers();
+            List<Task> timeSeriesDataStore = new();
+            foreach(TickerEntity ticker in portfolioTickers)
+            {
+                string QUERY_URL = String.Format("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol={0}&apikey={1}", ticker.Ticker, Constants.ApiKeys.AlphaVantage);
+                Uri queryUri = new Uri(QUERY_URL);
+                HttpClient client = HttpClientSingleton.Instance;
+                HttpResponseMessage response = await client.GetAsync(queryUri);
+                string data = await response.Content.ReadAsStringAsync();
+                TimeSeriesDaily parsedData = JsonConvert.DeserializeObject<TimeSeriesDaily>(data);
+                timeSeriesDataStore.Add(Options.StoreTimeSeriesData(ticker.Ticker, parsedData));
+            }
+            await Task.WhenAll(timeSeriesDataStore);
         }
     }
 }
