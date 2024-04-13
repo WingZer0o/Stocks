@@ -69,5 +69,25 @@ namespace AlphaVantageTickerHarvester
             }
             await Task.WhenAll(timeSeriesDataStore);
         }
+        public static async Task PopulateIncomeStatementDataForTicker(string ticker)
+        {
+            string QUERY_URL = String.Format("https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={0}&apikey={1}", ticker, Constants.ApiKeys.AlphaVantage);
+            Uri queryUri = new Uri(QUERY_URL);
+            HttpClient client = HttpClientSingleton.Instance;
+            HttpResponseMessage response = await client.GetAsync(queryUri);
+            string data = await response.Content.ReadAsStringAsync();
+            IncomeStatement parsedData = JsonConvert.DeserializeObject<IncomeStatement>(data);
+            await Options.StoreAnnaulReports(ticker, parsedData);
+        }
+
+        private static async Task StoreAnnaulReports(string ticker, IncomeStatement parsedData)
+        {
+            List<Task> dbCalls = new();
+            foreach (AnnualReport report in parsedData.AnnualReports)
+            {
+                dbCalls.Add(IncomeStatementRepository.InsertIncomeStatement(ticker, report));
+            }
+            await Task.WhenAll(dbCalls);
+        }
     }
 }

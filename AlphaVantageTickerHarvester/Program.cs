@@ -11,6 +11,7 @@ Console.WriteLine("Please enter an option: ");
 Console.WriteLine("1. 10, 50, 200 Day Simple Moving Averages (SMA)");
 Console.WriteLine("2. Populate Database with Time Series Data");
 Console.WriteLine("3. Populate Portfolio Tickers with Time Series Data");
+Console.WriteLine("4. Populate Database with Income Statement Data");
 
 string userOption = Console.ReadLine();
 
@@ -24,6 +25,9 @@ switch (userOption)
         break;
     case "3":
         await Options.PopulatePortfolioTickersWithTimeSeriesData();
+        break;
+    case "4":
+        await Options.PopulateIncomeStatementDataForTicker(userTickerInput);
         break;
     default:
         Console.WriteLine("You did not enter a valid option");
