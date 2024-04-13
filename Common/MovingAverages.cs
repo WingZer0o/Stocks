@@ -12,6 +12,11 @@
             return total / prices.Count;
         }
 
+        /// <summary>
+        /// Assigns more weight to more recent prices, method assumes the prices where already sorted by Date in descending order.
+        /// </summary>
+        /// <param name="prices"></param>
+        /// <returns></returns>
         public static double LinearWeightedMovingAverage(List<string> prices)
         {
             double total = 0;
