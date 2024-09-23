@@ -8,7 +8,7 @@ namespace SQLServerQuerier
     {
         public static async Task GetSimpleMovingAverageByTicker(string ticker)
         {
-            List<TimeSeriesDailyEntity> data = await TimeSeriesDailyRepository.GetTimeSeriesDailyByCount(ticker, 200);
+            List<TimeSeriesDailyEntity> data = await new TimeSeriesDailyRepository().GetTimeSeriesDailyByCount(ticker, 200);
             List<string> days10 = data.Take(10).ToList().Select(x => x.Close).ToList();
             double days10MovingAverage = MovingAverages.SimpleMovingAverage(days10);
             Console.WriteLine(String.Format("The 10 Day SMA for {0} is: {1}", ticker, days10MovingAverage));
@@ -24,7 +24,7 @@ namespace SQLServerQuerier
 
         public static async Task GetLinearWeightedMovingAverageByTicker(string ticker)
         {
-            List<TimeSeriesDailyEntity> data = await TimeSeriesDailyRepository.GetTimeSeriesDailyByCount(ticker, 200);
+            List<TimeSeriesDailyEntity> data = await new TimeSeriesDailyRepository().GetTimeSeriesDailyByCount(ticker, 200);
             List<string> days10 = data.Take(10).ToList().Select(x => x.Close).ToList();
             double days10MovingAverage = MovingAverages.LinearWeightedMovingAverage(days10);
             Console.WriteLine(String.Format("The 10 Day LMWA for {0} is: {1}", ticker, days10MovingAverage));

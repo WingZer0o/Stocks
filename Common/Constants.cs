@@ -9,7 +9,7 @@
 
         public class ConnectionStrings
         {
-            public const string StocksDatabase = "Data Source=MM-Desktop;Initial Catalog=Stocks;Integrated Security=True;Encrypt=False";
+            public const string StocksDatabase = "Data Source=MM-DESKTOP;Initial Catalog=Stocks;Integrated Security=True;Encrypt=False";
         }
     }
 }
