@@ -46,16 +46,17 @@ namespace AlphaVantageTickerHarvester
         private static async Task StoreTimeSeriesData(string ticker, TimeSeriesDaily parsedData)
         {
             List<Task> dbCalls = new();
+            TimeSeriesDailyRepository repo = new TimeSeriesDailyRepository();
             foreach (KeyValuePair<string, TimeSeriesData> kvp in parsedData.TimeSeries)
             {
-                dbCalls.Add(TimeSeriesDailyRepository.InsertTimeSeriesDaily(ticker, kvp.Key, kvp.Value));
+                dbCalls.Add(repo.InsertTimeSeriesDaily(ticker, kvp.Key, kvp.Value));
             }
             await Task.WhenAll(dbCalls);
         }
 
         public static async Task PopulatePortfolioTickersWithTimeSeriesData()
         {
-            List<TickerEntity> portfolioTickers = await TickerRepository.GetPortfolioTickers();
+            List<TickerEntity> portfolioTickers = await new TickerRepository().GetPortfolioTickers();
             List<Task> timeSeriesDataStore = new();
             foreach(TickerEntity ticker in portfolioTickers)
             {
@@ -83,9 +84,10 @@ namespace AlphaVantageTickerHarvester
         private static async Task StoreAnnaulReports(string ticker, IncomeStatement parsedData)
         {
             List<Task> dbCalls = new();
+            IncomeStatementRepository repo = new IncomeStatementRepository();
             foreach (AnnualReport report in parsedData.AnnualReports)
             {
-                dbCalls.Add(IncomeStatementRepository.InsertIncomeStatement(ticker, report));
+                dbCalls.Add(repo.InsertIncomeStatement(ticker, report));
             }
             await Task.WhenAll(dbCalls);
         }
