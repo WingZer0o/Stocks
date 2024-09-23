@@ -4,9 +4,9 @@ using System.Data.SqlClient;
 
 namespace DataLayer
 {
-    public static class IncomeStatementRepository
+    public class IncomeStatementRepository
     {
-        public static async Task InsertIncomeStatement(string ticker, AnnualReport parsedAnnualReport)
+        public async Task InsertIncomeStatement(string ticker, AnnualReport parsedAnnualReport)
         {
             using SqlConnection connection = new SqlConnection(Constants.ConnectionStrings.StocksDatabase);
             using SqlCommand command = new SqlCommand("dbo.InsertIncomeStatement", connection);

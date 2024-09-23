@@ -4,9 +4,9 @@ using System.Data.SqlClient;
 
 namespace DataLayer
 {
-    public static class TickerRepository
+    public class TickerRepository
     {
-        public static async Task InsertTicker(string ticker)
+        public async Task InsertTicker(string ticker)
         {
             using SqlConnection connection = new SqlConnection(Constants.ConnectionStrings.StocksDatabase);
             using SqlCommand command = new SqlCommand("dbo.InsertTicker", connection);
@@ -16,7 +16,7 @@ namespace DataLayer
             await command.ExecuteNonQueryAsync();
         }
 
-        public static async Task<List<TickerEntity>> GetPortfolioTickers()
+        public async Task<List<TickerEntity>> GetPortfolioTickers()
         {
             using SqlConnection connection = new SqlConnection(Constants.ConnectionStrings.StocksDatabase);
             using SqlCommand command = new SqlCommand("dbo.GetPortfolioTickers", connection);
