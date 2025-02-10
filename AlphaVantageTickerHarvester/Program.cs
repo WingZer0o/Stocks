@@ -12,7 +12,7 @@ string userOption = Console.ReadLine();
 switch (userOption)
 {
     case "1":
-        Console.Write("Enter Ticker To Populate Local SQL Server: ");
+        Console.Write("Enter Ticker To See 10, 50, 200 SMA: ");
         string userTickerInput = Console.ReadLine();
         new TickerRepository().InsertTicker(userTickerInput);
         await Options.MovingAverage1050200Day(userTickerInput);
@@ -36,6 +36,3 @@ switch (userOption)
         Console.WriteLine("You did not enter a valid option");
         break;
 }
-
-// populate the time series data for the ticker.
-Console.ReadLine();

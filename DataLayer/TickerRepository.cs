@@ -16,6 +16,26 @@ namespace DataLayer
             await command.ExecuteNonQueryAsync();
         }
 
+        public async Task<List<TickerEntity>> GetTickers()
+        {
+            using SqlConnection connection = new SqlConnection(Constants.ConnectionStrings.StocksDatabase);
+            using SqlCommand command = new SqlCommand("dbo.GetTickers", connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            await connection.OpenAsync();
+            using SqlDataReader reader = await command.ExecuteReaderAsync();
+            List<TickerEntity> tickers = new();
+            while (await reader.ReadAsync())
+            {
+                tickers.Add(new TickerEntity()
+                {
+                    ID = reader.GetGuid(reader.GetOrdinal("ID")),
+                    Ticker = reader.GetString(reader.GetOrdinal("Ticker")),
+                    IsInPortfolio = reader.GetBoolean(reader.GetOrdinal("IsInPortfolio"))
+                });
+            }
+            return tickers;
+        }
+
         public async Task<List<TickerEntity>> GetPortfolioTickers()
         {
             using SqlConnection connection = new SqlConnection(Constants.ConnectionStrings.StocksDatabase);

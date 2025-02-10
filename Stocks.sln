@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaVantageTickerHarvester
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLServerQuerier", "SQLServerQuerier\SQLServerQuerier.csproj", "{90E9282F-61F8-4380-B7B1-A1BD88D1567C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emailer", "Emailer\Emailer.csproj", "{E114418C-D4E9-4CE6-9D61-7A2A3E1C4572}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{90E9282F-61F8-4380-B7B1-A1BD88D1567C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90E9282F-61F8-4380-B7B1-A1BD88D1567C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90E9282F-61F8-4380-B7B1-A1BD88D1567C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E114418C-D4E9-4CE6-9D61-7A2A3E1C4572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E114418C-D4E9-4CE6-9D61-7A2A3E1C4572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E114418C-D4E9-4CE6-9D61-7A2A3E1C4572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E114418C-D4E9-4CE6-9D61-7A2A3E1C4572}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
